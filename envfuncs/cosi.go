@@ -29,3 +29,19 @@ func InstallDriver(ctx context.Context, cfg *envconf.Config) (context.Context, e
 func UninstallDriver(ctx context.Context, cfg *envconf.Config) (context.Context, error) {
 	return ctx, nil
 }
+
+func CreateBucketClass(ctx context.Context, cfg *envconf.Config) (context.Context, error) {
+	return ctx, nil
+}
+
+func DeleteBucketClass(ctx context.Context, cfg *envconf.Config) (context.Context, error) {
+	return ctx, nil
+}
+
+func CreateBucketAccessClass(ctx context.Context, cfg *envconf.Config) (context.Context, error) {
+	return ctx, nil
+}
+
+func DeleteBucketAccessClass(ctx context.Context, cfg *envconf.Config) (context.Context, error) {
+	return ctx, nil
+}

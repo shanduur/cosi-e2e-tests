@@ -22,6 +22,8 @@ var (
 	noInstallCRDs         bool
 	noInstallController   bool
 	noInstallSampleDriver bool
+
+	foo string
 )
 
 func TestMain(m *testing.M) {
@@ -41,16 +43,24 @@ func TestMain(m *testing.M) {
 	testenv.Setup(
 		// TODO: make this optional
 		envfuncs.CreateCluster,
+
 		envfuncs.InstallCRDs,
 		envfuncs.InstallController,
 		envfuncs.InstallDriver,
+
+		envfuncs.CreateBucketClass,
+		envfuncs.CreateBucketAccessClass,
 	)
 
 	testenv.Finish(
 		// TODO: make this optional
+		envfuncs.DeleteBucketAccessClass,
+		envfuncs.DeleteBucketClass,
+
 		envfuncs.UninstallDriver,
 		envfuncs.UninstallController,
 		envfuncs.UninstallCRDs,
+
 		envfuncs.DeleteCluster,
 	)
 
@@ -72,8 +82,6 @@ func TestMain(m *testing.M) {
 func TestBucketProvisioning(t *testing.T) {
 	testenv.Test(t,
 		features.New("Greenfield Bucket").
-			Assess("BucketClass is created",
-				cosi.CreateBucketClass(&v1alpha1.BucketClass{})).
 			Assess("BucketClaim is created",
 				cosi.CreateBucketClaim(&v1alpha1.BucketClaim{})).
 			Assess("Bucket is created",
@@ -87,8 +95,6 @@ func TestBucketProvisioning(t *testing.T) {
 			Feature(),
 
 		features.New("Brownfield Bucket").
-			Assess("BucketClass is created",
-				cosi.CreateBucketClass(&v1alpha1.BucketClass{})).
 			Assess("BucketClaim is created",
 				cosi.CreateBucketClaim(&v1alpha1.BucketClaim{})).
 			Assess("Bucket is created",
@@ -106,16 +112,12 @@ func TestBucketProvisioning(t *testing.T) {
 func TestBucketAccessProvisioning(t *testing.T) {
 	testenv.Test(t,
 		features.New("BucketAccess").
-			Assess("BucketClass is created",
-				cosi.CreateBucketClass(&v1alpha1.BucketClass{})).
 			Assess("BucketClaim is created",
 				cosi.CreateBucketClaim(&v1alpha1.BucketClaim{})).
 			Assess("Bucket is created",
 				cosi.CreateBucket(&v1alpha1.Bucket{})).
 			Assess("BucketClaim has ready status",
 				cosi.BucketClaimStatusReady).
-			Assess("BucketAccessClass is created",
-				cosi.CreateBucketAccessClass(&v1alpha1.BucketAccessClass{})).
 			Assess("BucketAccess is created",
 				cosi.CreateBucketAccess(&v1alpha1.BucketAccess{})).
 			Assess("BucketAccess has ready status",

@@ -105,12 +105,6 @@ func DeleteBucketClaim(ctx context.Context, t *testing.T, cfg *envconf.Config) c
 	return ctx
 }
 
-func CreateBucketClass(bucketClass *cosiv1alpha1.BucketClass) func(ctx context.Context, t *testing.T, cfg *envconf.Config) context.Context {
-	return func(ctx context.Context, t *testing.T, cfg *envconf.Config) context.Context {
-		return ctx
-	}
-}
-
 func CreateBucketAccess(bucketAccess *cosiv1alpha1.BucketAccess) func(ctx context.Context, t *testing.T, cfg *envconf.Config) context.Context {
 	return func(ctx context.Context, t *testing.T, cfg *envconf.Config) context.Context {
 		return ctx
@@ -125,10 +119,4 @@ func SecretExists(expected bool) func(ctx context.Context, t *testing.T, cfg *en
 
 func DeleteBucketAccess(ctx context.Context, t *testing.T, cfg *envconf.Config) context.Context {
 	return ctx
-}
-
-func CreateBucketAccessClass(bucketAccessClass *cosiv1alpha1.BucketAccessClass) func(ctx context.Context, t *testing.T, cfg *envconf.Config) context.Context {
-	return func(ctx context.Context, t *testing.T, cfg *envconf.Config) context.Context {
-		return ctx
-	}
 }
